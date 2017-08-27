@@ -125,7 +125,39 @@ open class PopupDialogButton: UIButton {
         setTitle(title, for: UIControlState())
 
         self.dismissOnTap = dismissOnTap
+        
+        // Setup the views
+        setupView()
 
+    }
+    
+    /*!
+     Creates a button that can be added to the popup dialog, but with an icon instead of title.
+     
+     - parameter image:         The button icon / image to be displayed
+     - parameter dismisssOnTap: Whether a tap automatically dismisses the dialog
+     - parameter action:        The action closure
+     
+     - returns: PopupDialogButton
+     */
+    public init(image: UIImage?,
+                            height: Int = 45,
+                            dismissOnTap: Bool = true,
+                            action: PopupDialogButtonAction?
+        ) {
+        // Assign the button height
+        buttonHeight = height
+        
+        // Assign the button action
+        buttonAction = action
+        
+        super.init(frame: .zero)
+
+        // Set the button image
+        setImage(image, for: UIControlState())
+        
+        self.dismissOnTap = dismissOnTap
+        
         // Setup the views
         setupView()
     }
