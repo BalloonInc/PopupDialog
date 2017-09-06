@@ -60,6 +60,13 @@ public extension PopupDialogDefaultViewController {
             standardView.pv_layoutIfNeededAnimated()
         }
     }
+    public var attributedTitleText: NSAttributedString? {
+        get { return standardView.titleLabel.attributedText }
+        set {
+            standardView.titleLabel.attributedText = newValue
+            standardView.pv_layoutIfNeededAnimated()
+        }
+    }
 
     /// The message text of the dialog
     public var messageText: String? {
@@ -69,6 +76,15 @@ public extension PopupDialogDefaultViewController {
             standardView.pv_layoutIfNeededAnimated()
         }
     }
+    /// The message text of the dialog
+    public var attributedMessageText: NSAttributedString? {
+        get { return standardView.messageLabel.attributedText }
+        set {
+            standardView.messageLabel.attributedText = newValue
+            standardView.pv_layoutIfNeededAnimated()
+        }
+    }
+
 
     // MARK: Appearance
 

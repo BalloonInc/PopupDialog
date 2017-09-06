@@ -98,6 +98,30 @@ final public class PopupDialog: UIViewController {
         // Call designated initializer
         self.init(viewController: viewController, buttonAlignment: buttonAlignment, transitionStyle: transitionStyle, gestureDismissal: gestureDismissal, completion: completion)
     }
+    
+    
+    public convenience init(
+        title: String?,
+        message: String?,
+        attributedTitle: NSAttributedString? = nil,
+        attributedMessage: NSAttributedString? = nil,
+        image: UIImage? = nil,
+        buttonAlignment: UILayoutConstraintAxis = .vertical,
+        transitionStyle: PopupDialogTransitionStyle = .bounceUp,
+        gestureDismissal: Bool = true,
+        completion: (() -> Void)? = nil) {
+        
+        // Create and configure the standard popup dialog view
+        let viewController = PopupDialogDefaultViewController()
+        viewController.titleText   = title
+        viewController.attributedTitleText   = attributedTitle
+        viewController.messageText = message
+        viewController.attributedMessageText = attributedMessage
+        viewController.image       = image
+        
+        // Call designated initializer
+        self.init(viewController: viewController, buttonAlignment: buttonAlignment, transitionStyle: transitionStyle, gestureDismissal: gestureDismissal, completion: completion)
+    }
 
     /*!
      Creates a popup dialog containing a custom view
