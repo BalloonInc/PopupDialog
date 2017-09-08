@@ -84,6 +84,15 @@ public extension PopupDialogDefaultViewController {
             standardView.pv_layoutIfNeededAnimated()
         }
     }
+    
+    /// The margin on top of and below the text
+    public var textMargin: Int? {
+        get { return standardView.textMargin }
+        set {
+            standardView.textMargin = newValue
+            standardView.pv_layoutIfNeededAnimated()
+        }
+    }
 
 
     // MARK: Appearance

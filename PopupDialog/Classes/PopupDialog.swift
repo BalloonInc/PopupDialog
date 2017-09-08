@@ -105,6 +105,7 @@ final public class PopupDialog: UIViewController {
         message: String?,
         attributedTitle: NSAttributedString? = nil,
         attributedMessage: NSAttributedString? = nil,
+        textMargin: Int = 20,
         image: UIImage? = nil,
         buttonAlignment: UILayoutConstraintAxis = .vertical,
         transitionStyle: PopupDialogTransitionStyle = .bounceUp,
@@ -118,6 +119,7 @@ final public class PopupDialog: UIViewController {
         viewController.messageText = message
         viewController.attributedMessageText = attributedMessage
         viewController.image       = image
+        viewController.textMargin = textMargin
         
         // Call designated initializer
         self.init(viewController: viewController, buttonAlignment: buttonAlignment, transitionStyle: transitionStyle, gestureDismissal: gestureDismissal, completion: completion)
@@ -346,3 +348,4 @@ extension PopupDialog {
         set { presentationManager.transitionStyle = newValue }
     }
 }
+

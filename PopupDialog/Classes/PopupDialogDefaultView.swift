@@ -28,8 +28,22 @@ import UIKit
 
 /// The main view of the popup dialog
 final public class PopupDialogDefaultView: UIView {
-
+    private var _textMargin: Int = 20
+    private var internalConstraints = [NSLayoutConstraint]()
     // MARK: - Appearance
+    
+    public var textMargin : Int? {
+        get {return _textMargin }
+        set {
+            if newValue == nil {
+                _textMargin = 20 // default margin
+            }
+            else {
+                _textMargin = newValue!
+            }
+            setupConstraints()
+        }
+    }
 
     /// The font and size of the title label
     @objc public dynamic var titleFont: UIFont {
@@ -116,6 +130,25 @@ final public class PopupDialogDefaultView: UIView {
 
     // MARK: - View setup
 
+    fileprivate func setupConstraints() {
+        // Layout views
+        NSLayoutConstraint.deactivate(internalConstraints)
+        let views = ["imageView": imageView, "titleLabel": titleLabel, "messageLabel": messageLabel] as [String : Any]
+        internalConstraints.removeAll()
+        
+        internalConstraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[imageView]|", options: [], metrics: nil, views: views)
+        internalConstraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|-(==20@900)-[titleLabel]-(==20@900)-|", options: [], metrics: nil, views: views)
+        internalConstraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|-(==20@900)-[messageLabel]-(==20@900)-|", options: [], metrics: nil, views: views)
+        internalConstraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[imageView]-(==\(_textMargin)@900)-[titleLabel]-(==8@900)-[messageLabel]-(==\(_textMargin)@900)-|", options: [], metrics: nil, views: views)
+        
+        // ImageView height constraint
+        imageHeightConstraint = NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: imageView, attribute: .height, multiplier: 0, constant: 0)
+        internalConstraints.append(imageHeightConstraint!)
+        
+        // Activate constraints
+        NSLayoutConstraint.activate(internalConstraints)
+    }
+    
     internal func setupViews() {
 
         // Self setup
@@ -126,20 +159,6 @@ final public class PopupDialogDefaultView: UIView {
         addSubview(titleLabel)
         addSubview(messageLabel)
 
-        // Layout views
-        let views = ["imageView": imageView, "titleLabel": titleLabel, "messageLabel": messageLabel] as [String : Any]
-        var constraints = [NSLayoutConstraint]()
-
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[imageView]|", options: [], metrics: nil, views: views)
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|-(==20@900)-[titleLabel]-(==20@900)-|", options: [], metrics: nil, views: views)
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|-(==20@900)-[messageLabel]-(==20@900)-|", options: [], metrics: nil, views: views)
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[imageView]-(==30@900)-[titleLabel]-(==8@900)-[messageLabel]-(==30@900)-|", options: [], metrics: nil, views: views)
-        
-        // ImageView height constraint
-        imageHeightConstraint = NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: imageView, attribute: .height, multiplier: 0, constant: 0)
-        constraints.append(imageHeightConstraint!)
-
-        // Activate constraints
-        NSLayoutConstraint.activate(constraints)
+        setupConstraints()
     }
 }
